@@ -15,11 +15,9 @@ void setup() {
 }
 int dist;
 void loop() {
-    delay(250);   
+    delay(175);   
        
     if( (dist = sensor->objectDetected()) ) {
-        Serial.print( "Object at: ");
-        Serial.println( dist );
         relay->activate();
     } else relay->deActivate();
 
