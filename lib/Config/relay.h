@@ -1,6 +1,5 @@
 #include<Arduino.h>
 #include<config.h>
-#include<motor.h>
 
 class Relay {
 

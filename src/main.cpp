@@ -17,7 +17,7 @@ int dist;
 void loop() {
     delay(250);   
        
-    if( (dist = sensor->objectDetectedAt()) ) {
+    if( (dist = sensor->objectDetected()) ) {
         Serial.print( "Object at: ");
         Serial.println( dist );
         relay->activate();
