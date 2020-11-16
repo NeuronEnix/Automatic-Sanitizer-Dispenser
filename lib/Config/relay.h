@@ -1,25 +1,25 @@
 #include<Arduino.h>
 #include<config.h>
-#include<motor.h>
 
+template<class T>
 class Relay {
 
 private: 
     const int pin;
     bool isEnabled;
-    Motor *motor;
+    T *device;
 
 public:
 
-    Relay (): pin( RELAY_MODULE_PIN ), isEnabled( false )
+    Relay ( T *device ): pin( RELAY_MODULE_PIN ), isEnabled( false )
     {
-        this->motor = new Motor();
+        this->device = device;
         this->disable();
     }
 
     bool enable() {
 
-        if( !motor->enable() ) return !this->disable();
+        if( !device->enable() ) return !this->disable();
 
         if( !this->isEnabled ){
             digitalWrite( this->pin, HIGH );
@@ -32,7 +32,7 @@ public:
     bool disable() {
 
         if( this->isEnabled ){
-            motor->disable();
+            device->disable();
             digitalWrite( this->pin, LOW );
             this->isEnabled = false;
         }

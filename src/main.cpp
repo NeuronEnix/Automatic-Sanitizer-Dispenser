@@ -1,16 +1,17 @@
 #include <NewPing.h>
 #include<ultrasonic.h>
 #include<relay.h>
+#include<motor.h>
 
 Ultrasonic *sensor;
-Relay *relay;
+Relay<Motor> *relay;
 
 void setup() {
 
     Serial.begin(9600); // Open serial monitor at 115200 baud to see ping results.
 
     sensor = new Ultrasonic();
-    relay = new Relay();
+    relay = new Relay<Motor>( new Motor() );
 
 }
 int dist;
