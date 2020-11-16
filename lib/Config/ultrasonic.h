@@ -43,7 +43,7 @@ public:
 
             if( potentialObjectDetectedAt == 0 )
                 potentialObjectDetectedAt = millis();
-            else if( potentialObjectDetectedAt + objectDetectionDelay <= millis() )
+            else if( potentialObjectDetectedAt + objectDetectionDelay < millis() )
                 return true;
                 
         } else potentialObjectDetectedAt = 0;
