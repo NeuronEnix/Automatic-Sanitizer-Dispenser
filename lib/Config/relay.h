@@ -1,29 +1,42 @@
 #include<Arduino.h>
 #include<config.h>
+#include<motor.h>
 
 class Relay {
 
 private: 
     const int pin;
-    bool isActive;
+    bool isEnabled;
+    Motor *motor;
 
 public:
 
-    Relay (): pin( RELAY_MODULE_PIN ), isActive( false )
+    Relay (): pin( RELAY_MODULE_PIN ), isEnabled( false )
     {
-        this->deActivate();
+        this->motor = new Motor();
+        this->disable();
     }
 
-    void activate() {
-        if( this->isActive ) return;
-        digitalWrite( this->pin, HIGH );
-        this->isActive = true;
+    bool enable() {
+
+        if( !motor->enable() ) return !this->disable();
+
+        if( !this->isEnabled ){
+            digitalWrite( this->pin, HIGH );
+            this->isEnabled = true;
+        }
+        return true;
+
     }
 
-    void deActivate() {
-        if( !this->isActive ) return;
-        digitalWrite( this->pin, LOW );
-        this->isActive = false;
+    bool disable() {
+
+        if( this->isEnabled ){
+            motor->disable();
+            digitalWrite( this->pin, LOW );
+            this->isEnabled = false;
+        }
+        return true;
     }
     
 };

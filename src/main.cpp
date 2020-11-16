@@ -16,10 +16,11 @@ void setup() {
 int dist;
 void loop() {
     delay(175);   
-       
+    const uint32_t t = millis();
     if( (dist = sensor->objectDetected()) ) {
-        relay->activate();
-    } else relay->deActivate();
-
+        relay->enable();
+    } else relay->disable();
+    Serial.print( "RunTime: ");
+    Serial.println( millis() - t);
   
 }
