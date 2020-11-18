@@ -6,10 +6,11 @@ class Ultrasonic {
 private:
     const int trigPin;
     const int echoPin;
-    const unsigned long trigDist;
-    const unsigned long objectDetectionDelay;
+    const uint32_t trigDist;
+    const uint32_t objectDetectionDelay;
 
-    unsigned long potentialObjectDetectedAt;
+    uint32_t potentialObjectDetectedAt;
+    uint32_t objectDetectionConfirmedAt;
     NewPing *sonar;
 
     unsigned long objectDetectedAt() {
@@ -35,18 +36,23 @@ public:
         this->sonar = new NewPing( trigPin, echoPin );
     }
 
-   
+    uint32_t confirmedObjectDetectionAt(){
+        return this->objectDetectionConfirmedAt;
+    }
     bool objectDetected() {
         unsigned long dist = this->objectDetectedAt();
         
         if( dist ) {
+            const uint32_t curTime = millis();
 
             if( potentialObjectDetectedAt == 0 )
-                potentialObjectDetectedAt = millis();
-            else if( potentialObjectDetectedAt + objectDetectionDelay < millis() )
+                potentialObjectDetectedAt = curTime;
+            else if( potentialObjectDetectedAt + objectDetectionDelay < curTime ){
+                if( objectDetectionConfirmedAt == 0 ) objectDetectionConfirmedAt = curTime;
                 return true;
+            }
                 
-        } else potentialObjectDetectedAt = 0;
+        } else { potentialObjectDetectedAt = 0; objectDetectionConfirmedAt = 0; }
 
         return false;
     }
