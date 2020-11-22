@@ -6,7 +6,7 @@ class Ultrasonic {
 private:
     const int trigPin;
     const int echoPin;
-    const uint32_t trigDist;
+    const uint32_t minTrigDist, maxTrigDist ;
     const uint32_t objectDetectionDelay;
 
     uint32_t potentialObjectDetectedAt;
@@ -15,10 +15,10 @@ private:
 
     unsigned long objectDetectedAt() {
         unsigned long dist = this->sonar->ping_cm();
-        if( 0 < dist and dist < trigDist ){
-
             Serial.print( "Object At: "); // deb
             Serial.println( dist ); // deb
+        if( minTrigDist <= dist and dist <= maxTrigDist ){
+
 
             return dist;
         }
@@ -29,7 +29,8 @@ public:
     Ultrasonic(): 
         trigPin( ULTRASONIC_TRIG_PIN ), 
         echoPin( ULTRASONIC_ECHO_PIN ), 
-        trigDist( ULTRASONIC_TRIGGER_DIST_IN_CM ),
+        minTrigDist( ULTRASONIC_MIN_TRIGGER_DIST_IN_CM ),
+        maxTrigDist( ULTRASONIC_MAX_TRIGGER_DIST_IN_CM ),
         objectDetectionDelay( ULTRASONIC_OBJECT_DETECTION_DELAY_IN_MS )
     {
         this->potentialObjectDetectedAt = 0 ;
