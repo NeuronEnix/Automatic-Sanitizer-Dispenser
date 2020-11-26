@@ -1,5 +1,5 @@
 # Automatic Sanitizer Dispenser
-### A Fully Automated Hand Sanitizer Dispenser Using `Arduino` in  `C++`
+### A Fully Automated Hand Sanitizer Dispenser Using `Arduino` and `Ultrasonic Sensor` in  `C++`
 
 ```C++
 #include<Arduino.h>
